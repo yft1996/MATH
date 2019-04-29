@@ -71,6 +71,12 @@ public:
     void generate_help_text(std::ostream& ostream) const;
 
 private:
+    void parse_long_option(std::string const& token);
+    bool parse_short_option(std::string const& token1, std::string const& token2);
+    ArgOption const* find_option(char short_option_name);
+    ArgOption const* find_option(std::string const& long_option_name);
+
+private:
    std::size_t nonoption_min;
    std::size_t nonoption_max;
    bool auto_exit;
