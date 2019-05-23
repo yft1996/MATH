@@ -22,6 +22,7 @@ MATRIX_NAMESPACE_BEGIN
  *~~~~~~~~~~~~~~~~~~~~~常用矩阵类型别名声明~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  *******************************************************************/
     template <typename T, int m ,int n> class Matrix;
+
     typedef Matrix<int,2,2> Matrix2i;
     typedef Matrix<int,3,3> Matrix3i;
     typedef Matrix<int,3,4> Matrix34i;
@@ -407,6 +408,8 @@ MATRIX_NAMESPACE_BEGIN
         */
         Matrix<T,m,n - 1> delete_col(int index) const;
 
+        Matrix<T,m,n>& fill(T const& value);
+
 
 /********************************************************************
 *~~~~~~~~~~~~~~~~~~~~~~Vector一元运算~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -457,7 +460,8 @@ MATRIX_NAMESPACE_BEGIN
 
 
 
-
+        //先判断为方阵
+        void set_identity();
 
 
         //TODO(8): 伴随矩阵
@@ -887,6 +891,13 @@ MATRIX_NAMESPACE_END
         return matrix1;
     }
 
+    template <typename T,int m, int n>
+    Matrix<T,m,n>&
+    Matrix<T,m,n>::fill(const T &value)
+    {
+        std::fill(M,M + m * n,value);
+        return *this;
+    }
 
     template <typename T,int m,int n>
     inline Matrix<T,m,n>&
@@ -934,7 +945,19 @@ MATRIX_NAMESPACE_END
 
     }
 
+    template <typename T,int m,int n>
+    void
+    Matrix<T,m,n>::set_identity()
+    {
+        if (!this->is_square())
+        {
+            throw runtime_error("该矩阵不为方阵！");
+        }
 
+        Matrix<T,m,n> matrix(T(0));
+        for (int i = 0; i < m * n; ++i)
+            (matrix)[i] = T(1);
+    }
 
 MATH_NAMESPACE_END
 #endif //__MATH_MATRIX_H__
