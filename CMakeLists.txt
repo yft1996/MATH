@@ -36,7 +36,7 @@ option(TESTS_ENABLED "是否编译测试二进制文件" OFF)
 ####################################################
 ######################TEST##########################
 ####################################################
-
+set(TESTS_ENABLED ON)
 if (TESTS_ENABLED)
     message(STATUS "允许编译测试文件")
     enable_testing()
@@ -115,14 +115,6 @@ add_subdirectory(examples)
 add_subdirectory(src)
 add_subdirectory(TestCase)
 
-
-install(FILES cmakemodule/MATHConfig.cmake
-        DESTINATION share/MATH)
-install(FILES cmakemodule/MATHConfigVersion.cmake
-        DESTINATION share/MATH)
-install(DIRECTORY include/MATH/
-        DESTINATION include/MATH)
-
 configure_file(
         "${PROJECT_SOURCE_DIR}/config/MATHConfig.cmake.in"
         "${PROJECT_SOURCE_DIR}/cmakemodule/MATHConfig.cmake" @ONLY
@@ -132,3 +124,10 @@ configure_file(
         "${PROJECT_SOURCE_DIR}/config/MATHConfigVersion.cmake.in"
         "${PROJECT_SOURCE_DIR}/cmakemodule/MATHConfigVersion.cmake" @ONLY
 )
+
+install(FILES cmakemodule/MATHConfig.cmake
+        DESTINATION share/MATH)
+install(FILES cmakemodule/MATHConfigVersion.cmake
+        DESTINATION share/MATH)
+install(DIRECTORY include/MATH/
+        DESTINATION include/MATH)
